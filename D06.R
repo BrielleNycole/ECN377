@@ -26,12 +26,12 @@ sdX  <- sqrt(VarX)    # sd(X)                 -- square root of the variance
 xj <- c(0,0,1,1)        # x across pairs (0,0) (0,1) (1,0) (1,1)
 yj <- c(0,1,0,1)        # y across those same pairs
 pj <- rep(1/4, 4)        # probability of each pair
-EXY <- sum(xj*yj*pj)           # E[XY]                 -- same idea, weight xj*yj
-CovXY <-      # Cov = E[XY] - E[X]*E[Y]    -- independent, so expect 0
+EXY <- sum(xj*yj*pj)           # E[XY]     -- same idea, weight xj*yj
+CovXY <- EXY - sum(xj*pj)*sum(yj*pj)    # Cov = E[XY] - E[X]*E[Y]    -- independent, so expect 0
 
 ## ===== 4. Correlation:  Cor(X,Y) = Cov(X,Y) / ( sd(X) * sd(Y) ) =====
 ## Unitless; always between -1 and 1.   (Remember: correlation is NOT causation.)
-______              # Cor(X, Y)             -- here sd(X) = sd(Y) = 0.5
+CovXY / 0.5*0.5             # Cor(X, Y)    -- here sd(X) = sd(Y) = 0.5
 
 ## ================= YOUR TURN =========================
 ## X takes values 1, 2, 3 with probabilities 0.2, 0.5, 0.3.
