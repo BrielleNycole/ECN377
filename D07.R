@@ -15,8 +15,12 @@ EY  <- sum(yj*pj)            # E[Y]   = sum(yj * pj)
 EXY <- sum(xj*yj*pj)         # E[XY]  = sum(xj * yj * pj)
 Cov <- EXY - EX*EY           # Cov(X,Y) = E[XY] - E[X]*E[Y]
 ## sd of a 0/1 variable: sd = sqrt(E[X^2] - E[X]^2), and X^2 = X here so E[X^2] = E[X]
-sdX <- sqrt(EX - EX^2)       # sqrt(EX - EX^2)
-sdY <- sqrt(EY - EY^2)       # sqrt(EY - EY^2)
+EX2 <- sum((xj^2)*pj)
+EY2 <- sum((yj^2)*pj)
+VarX <- EX2 - EX^2
+VarY <- EY2 - EY^2
+sdX <- sqrt(VarX)            # sqrt(EX - EX^2)
+sdY <- sqrt(VarY)            # sqrt(EY - EY^2)
 Cor <- Cov / (sdX*sdY)       # Cor = Cov / (sdX * sdY)
 
 ## ===== 2. Conditional expectation:  E[Y | X = x] = average of Y within the X = x subgroup =====
