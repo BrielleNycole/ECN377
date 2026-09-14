@@ -39,6 +39,9 @@ mean(wage1$educ[wage1$educ == 12])   # E[educ | educ = 12] = mean of educ AMONG 
 var(w12)           # Var(wage | educ = 12)  -- var() of the SAME selected wages: var(w12)
 var(wage1$wage[wage1$educ ==16])    # Var(wage | educ = 16)  -- var(wage1$wage[wage1$educ == 16])
 ## Which subgroup's wages are more spread out?  (income "fans out" at higher education)
+#educ=16 has a larger spread
+
+
 
 ## ================= YOUR TURN =========================
 ## (a) E[wage | educ = 14]  (Boolean -> select -> mean, like section 2):
