@@ -17,27 +17,27 @@ Cov <- EXY - EX*EY           # Cov(X,Y) = E[XY] - E[X]*E[Y]
 ## sd of a 0/1 variable: sd = sqrt(E[X^2] - E[X]^2), and X^2 = X here so E[X^2] = E[X]
 EX2 <- sum((xj^2)*pj)
 EY2 <- sum((yj^2)*pj)
-VarX <- EX2 - EX^2
-VarY <- EY2 - EY^2
-sdX <- sqrt(VarX)            # sqrt(EX - EX^2)
-sdY <- sqrt(VarY)            # sqrt(EY - EY^2)
+VarX <- EX2 - EX^2           # Var(X) = E[X^2] - E[X]^2
+VarY <- EY2 - EY^2           # Var(Y) = E[Y^2] - E[Y]^2
+sdX <- sqrt(VarX)            # sd(X) = sqrt(Var(X))
+sdY <- sqrt(VarY)            # sd(Y) = sqrt(Var(Y))
 Cor <- Cov / (sdX*sdY)       # Cor = Cov / (sdX * sdY)
 
 ## ===== 2. Conditional expectation:  E[Y | X = x] = average of Y within the X = x subgroup =====
 ## Build it in STEPS.  Goal: the average wage among people with exactly 12 years of educ.
-is12 <- ______   # a BOOLEAN vector, TRUE for each person with educ == 12   (wage1$educ == 12)
-w12  <- ______   # put the Boolean in [ ] to SELECT those people's wages     (wage1$wage[is12])
-______           # E[wage | educ = 12] = the average of those wages          (mean(w12))
+is12 <- (wage1$educ == 12)   # a BOOLEAN vector, TRUE for each person with educ == 12   (wage1$educ == 12)
+w12  <- (wage1$wage[is12])   # put the Boolean in [ ] to SELECT those people's wages     (wage1$wage[is12])
+E12 <- mean(w12)           # E[wage | educ = 12] = the average of those wages          (mean(w12))
 ## Now educ == 16 (college), the same idea in one line:
-______           # E[wage | educ = 16]   (mean(wage1$wage[wage1$educ == 16]))
+E16 <- mean(wage1$wage[wage1$educ == 16])      # E[wage | educ = 16] 
 ## The conditional mean RISES with education.
 
 ## Special case  E[X | X] = X: condition on X and there's nothing left to average.
-______           # E[educ | educ = 12] = mean of educ AMONG the educ==12 people (guess first!)
+mean(wage1$educ[wage1$educ == 12])   # E[educ | educ = 12] = mean of educ AMONG the educ==12 people (guess first!)
 
 ## ===== 3. Conditional variance:  Var(Y | X = x) = spread of Y within the X = x subgroup =====
-______           # Var(wage | educ = 12)  -- var() of the SAME selected wages: var(w12)
-______           # Var(wage | educ = 16)  -- var(wage1$wage[wage1$educ == 16])
+var(w12)           # Var(wage | educ = 12)  -- var() of the SAME selected wages: var(w12)
+var(wage1$wage[wage1$educ ==16])    # Var(wage | educ = 16)  -- var(wage1$wage[wage1$educ == 16])
 ## Which subgroup's wages are more spread out?  (income "fans out" at higher education)
 
 ## ================= YOUR TURN =========================
