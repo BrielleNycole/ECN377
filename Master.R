@@ -20,3 +20,6 @@ Cor <- Cov / (sdX*sdY)
 #Var(aX+bY) = (a^2)(VarX) - (b^2)(VarY) + 2ab(Cov(x,y))
 
 #E[aX + bY] = a*E[X] + b*E[Y] 
+#E[aX + b] = a*E[X] + b
+
+#Cov(a1*X + b1, a2*Y + b2) = a1*a2*Cov
