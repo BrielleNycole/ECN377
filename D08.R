@@ -7,11 +7,12 @@
 
 ## ---- Demo: colGPA as a FUNCTION of hsGPA  (illustrates R functions) ----
 ## Notes:  E[colGPA | hsGPA] = 1.5 + 0.5*hsGPA
-b0 <- ______                      # intercept
-b1 <- ______                      # slope
-colgpa <- function(hsgpa) {       # define colGPA as a function of hsGPA
-  ______                          # the line:  b0 + b1*hsgpa
-}
+b0 <- 1.5                      # intercept
+b1 <- 0.5                      # slope
+colgpa <- function(hsgpa) 
+{
+  b0+b1*hsGPA
+  }       
 colgpa(3.6)                       # use it: predicted colGPA at hsGPA = 3.6   (-> 3.3)
 ______                            # how much does colGPA change from hsGPA 2.6 to 3.6?  (use colgpa)
 hsGPA <- seq(2, 4, by = 0.1)      # a range of hsGPA values
