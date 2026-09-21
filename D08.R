@@ -14,7 +14,7 @@ colgpa <- function(hsgpa)
   b0+b1*hsGPA
   }       
 colgpa(3.6)                       # use it: predicted colGPA at hsGPA = 3.6   (-> 3.3)
-______                            # how much does colGPA change from hsGPA 2.6 to 3.6?  (use colgpa)
+b1 * 1                            # how much does colGPA change from hsGPA 2.6 to 3.6?  (use colgpa)
 hsGPA <- seq(2, 4, by = 0.1)      # a range of hsGPA values
 plot(hsGPA, colgpa(hsGPA), type = "l",
      xlab = "hsGPA", ylab = "E[colGPA | hsGPA]")   # plot the line
