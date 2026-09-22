@@ -15,6 +15,13 @@ sdX <- sqrt(VarX)
 sdY <- sqrt(VarY)            
 Cor <- Cov / (sdX*sdY)
 
+x <- c(1, 2, 3)
+y <- c(2, 2, 5)
+b1    <- cov(x,y) / var(x)   #slope
+b0    <- mean(y) - b1 * mean(x)   #intercept
+c(b0 = b0, b1 = b1)
+pred4 <- b0 + b1 * 4    # (c) predicted y at x = 4
+
 #Var(aX+b) = a^2(VarX)
 
 #Var(aX+bY) = (a^2)(VarX) - (b^2)(VarY) + 2ab(Cov(x,y))
