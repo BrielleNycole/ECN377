@@ -15,10 +15,12 @@ sdX <- sqrt(VarX)
 sdY <- sqrt(VarY)            
 Cor <- Cov / (sdX*sdY)
 
+#Y = b0 + b1*X + U
+#E[Y|X=x]= b0 + b1*x
 x <- c(1, 2, 3)
 y <- c(2, 2, 5)
-b1    <- cov(x,y) / var(x)   #slope
-b0    <- mean(y) - b1 * mean(x)   #intercept
+b1    <- cov(x,y) / var(x)   #OLS slope
+b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 c(b0 = b0, b1 = b1)
 pred4 <- b0 + b1 * 4    # (c) predicted y at x = 4
 
