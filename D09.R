@@ -1,8 +1,6 @@
 ## ECN 377 - Day 9 STARTER  |  Deriving the OLS estimates
-## ------------------------------------------------------------------
+
 ## The derivation ends at  beta1-hat = cov(x,y)/var(x),  beta0-hat = ybar - beta1*xbar.
-## Fill each ______ as we go, then COMMIT + PUSH.
-## ------------------------------------------------------------------
 
 ## ---- Demo: estimate the wage-education line, by hand ----
 library(wooldridge)
@@ -20,4 +18,4 @@ y <- c(2, 2, 5)
 b1    <- cov(x,y) / var(x)   # (a) slope
 b0    <- mean(y) - b1 * mean(x)   # (b) intercept
 c(b0 = b0, b1 = b1)
-pred4 <- b0 + b1 * 4    # (c) predicted y at x = 4
+pred4 <- b0 + b1*4    # (c) predicted y at x = 4
