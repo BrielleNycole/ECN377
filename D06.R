@@ -1,9 +1,6 @@
 ## ECN 377 - Day 6 STARTER  |  Expectation properties, variance, covariance, correlation
-## ------------------------------------------------------------------
-## One idea powers all of today:  weight each value by its probability, then add.
+
 ##      E[g(X)] = sum( g(x) * p )
-## Fill each ______ as we go in class, then COMMIT + PUSH.
-## ------------------------------------------------------------------
 
 ## ===== 1. Properties of expectation:  E[aX + bY] = a*E[X] + b*E[Y] =====
 ## Example: suppose E[X] = 2 and E[Y] = 3.  Find E[4X + 5Y - 3].
