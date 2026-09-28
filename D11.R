@@ -1,21 +1,20 @@
 ## ECN 377 - Day 11 STARTER  |  OLS properties 1-3;  SST = SSE + SSR, R^2
-## ------------------------------------------------------------------
-## Each ______ comment gives the MATH + a hint at the code; you write the command.
-## Fill each ______ as we go, then upload to GitHub.
-## ------------------------------------------------------------------
 
 library(wooldridge)
 data("wage1")
 reg <- lm(wage ~ educ, data = wage1)
-
+resids <- reg$residuals
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2]
 ## ---- OLS properties 1-3  (hold on ANY sample) ----
-______   # 1) the residuals sum to 0            -- add up the residuals of reg
-______   # 2) x & residuals are uncorrelated    -- add up educ * (the residuals)  (~ 0)
-______   # 3) (xbar, ybar) is ON the line       -- does mean(wage) equal  b0 + b1*mean(educ)?
+sum(resids)               # 1) the residuals sum to 0
+cov(resids, wage1$educ)   # 2) x & residuals are uncorrelated
+xbar <- b0+b1*(mean(wage1$educ)) #3)(xbar, ybar) is ON the line
+ybar <- mean(wage1$wage)
 
 ## ---- SST = SSE + SSR, and R^2   (bwght ~ cigs) ----
 data("bwght")
-reg2 <- ______   # regress bwght on cigs
+reg2 <-          #regress bwght on cigs
 SST <- ______    # total variation:   squared deviations of bwght from its mean, summed
 SSR <- ______    # unexplained:       squared residuals of reg2, summed
 SSE <- ______    # explained:         SST - SSR
