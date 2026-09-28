@@ -1,7 +1,4 @@
 ## ECN 377 - Day 7 STARTER  |  Correlation, conditional expectation & conditional variance
-## ------------------------------------------------------------------
-## Fill each ______ as we go in class, then COMMIT + PUSH.
-## ------------------------------------------------------------------
 
 library(wooldridge); data("wage1")
 
