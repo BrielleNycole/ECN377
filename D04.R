@@ -1,5 +1,4 @@
 ## ECN 377 - Day 4  |  variance, sd, covariance, correlation.  (all SAMPLE calculations)
-## We build this from scratch together -- pick your own numbers (poll the room!).
 
 ## --- Sample variance & sd ---
 ## put a few numbers in a vector called x
