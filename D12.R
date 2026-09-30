@@ -8,10 +8,12 @@ data("bwght")
 reg2 <- lm(bwght ~ cigs, data = bwght) 
 b0 <- reg2$coefficients[1]
 b1 <- reg2$coefficients[2]
-SST <- (nrow(bwght)-1) * var(bwght$bwght)
-SSR <- (nrow(bwght)-1) * var(reg2$residuals)
-SSE <- (nrow(bwght)-1) * var(reg2$fitted.values)
+SST <- (nrow(bwght)-1) * var(bwght$bwght)        #(n-1)*var(y)
+SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(residuals)
+SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted.values)
 R2  <- SSE/SST  
+R2 <- summary(reg2)$r.squared
+summary(reg2)
 
 ## ---- Units of measurement   (Example 2.3: salary on roe, salary in $1000s) ----
 data("ceosal1")
