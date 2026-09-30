@@ -17,8 +17,8 @@ Cor <- Cov / (sdX*sdY)
 
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
-x <- c(2,4,8)
-y <- c(11,4,0)
+x <- c(2,5,2)
+y <- c(12,7,9)
 b1    <- cov(x,y) / var(x)   #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 c(b0 = b0, b1 = b1)
@@ -42,4 +42,12 @@ uhat = yi - yhat
 #sum(uhat)=0
 #delta_yhat = b1 * delta_x
 
+#Q10
+x <- c(5,8,3)
+y <- c(15,12,1)
+b1 <- #  
+b0 <- #   
+fitted_vals <- b1 + b0*x
+resids <- y - fitted_vals
+SSR <- sum(resids^2) #sum of squared residuals
 
