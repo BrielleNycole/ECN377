@@ -12,14 +12,6 @@ cov(resids, wage1$educ)   # 2) x & residuals are uncorrelated
 xbar <- b0+b1*(mean(wage1$educ)) #3)(xbar, ybar) is ON the line
 ybar <- mean(wage1$wage)
 
-## ---- SST = SSE + SSR, and R^2   (bwght ~ cigs) ----
-data("bwght")
-reg2 <-          #regress bwght on cigs
-SST <- ______    # total variation:   squared deviations of bwght from its mean, summed
-SSR <- ______    # unexplained:       squared residuals of reg2, summed
-SSE <- ______    # explained:         SST - SSR
-R2  <- ______    # R^2 = SSE / SST    (~ 0.02: low is normal)
-
 ## ================= YOUR TURN =========================
 ## A regression has SST = 200 and SSR = 150.
 SST0 <- 200
