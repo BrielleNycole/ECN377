@@ -17,12 +17,12 @@ Cor <- Cov / (sdX*sdY)
 
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
-x <- c(1, 2, 3)
-y <- c(2, 2, 5)
+x <- c(2,10,7)
+y <- c(1,9,4)
 b1    <- cov(x,y) / var(x)   #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 c(b0 = b0, b1 = b1)
-pred4 <- b0 + b1 * 4    # (c) predicted y at x = 4
+pred4 <- b0 + b1 * 6    # (c) predicted y at x = 4
 
 #Var(aX+b) = a^2(VarX)
 
@@ -32,3 +32,11 @@ pred4 <- b0 + b1 * 4    # (c) predicted y at x = 4
 #E[aX + b] = a*E[X] + b
 
 #Cov(a1*X + b1, a2*Y + b2) = a1*a2*Cov
+R2 <- 1- 175/341
+R2*341
+1- 146/276
+40/246
+148/386
+(11/100)=1-(SSR/354)
+(11/100)-1
+0.89*354
