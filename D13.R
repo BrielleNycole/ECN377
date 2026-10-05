@@ -17,7 +17,9 @@ summary(reg3)$r.squared                # R^2 of reg3 -- same for all three regre
 ## ---- Demo: log-level (Example 2.10) ----
 ## What you're learning: log(y) on x  ->  slope is a PERCENT change in y.
 data("wage1")
-lm(log(wage) ~ educ, data = wage1)$coefficients      # 0.584, 0.083 (~8.3% per year)
+reg <- lm(log(wage) ~ educ, data = wage1)      # 0.584, 0.083 (~8.3% per year)
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2]
 
 ## ---- Demo: log-log / constant elasticity (Example 2.11) ----
 ## What you're learning: log(y) on log(x)  ->  slope is an ELASTICITY.
