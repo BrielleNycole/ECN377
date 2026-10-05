@@ -55,9 +55,10 @@ reg2 <- lm(bwght ~ cigs, data = bwght)
 b0 <- reg2$coefficients[1]
 b1 <- reg2$coefficients[2]
 SST <- (nrow(bwght)-1) * var(bwght$bwght)        #(n-1)*var(y)
-SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(residuals)
-SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted.values)
+SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(resids)
+SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted_vals)
 R2  <- SSE/SST  
 R2 <- summary(reg2)$r.squared
 summary(reg2)
+
 
