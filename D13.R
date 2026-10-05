@@ -1,20 +1,18 @@
 ## ECN 377 - Day 13 STARTER  |  Units of measurement;  logs & functional form
-## ------------------------------------------------------------------
-## Each ______ comment gives the MATH + a hint at the code; you write the command.
+
 ## Logs: wrap a variable in log() inside the formula; read the slope with Table 2.3.
-## Fill each ______ as we go, then upload to GitHub.
-## ------------------------------------------------------------------
+
 
 library(wooldridge)
 
 ## ---- Units of measurement   (Example 2.3: salary on roe, salary in $1000s) ----
 data("ceosal1")
-reg3 <- ______        # regress salary on roe                         (963.19 and 18.50)
-ceosal1$salarydol <- ______   # salary in DOLLARS:  Y x 1000          (hint: 1000 * the salary column)
-______                # regress salarydol on roe: both estimates x 1000?  (look at $coefficients)
-ceosal1$roedec <- ______      # roe as a DECIMAL:   X x 1/100         (hint: the roe column / 100)
-______                # regress salary on roedec: slope x 100, intercept unchanged?
-______                # R^2 of reg3 -- same for all three regressions  (hint: summary(...)$r.squared)
+reg3 <- lm(salary ~ roe, data = ceosal1)        # regress salary on roe                         (963.19 and 18.50)
+ceosal1$salarydol <- ceosal1$salary * 1000   # salary in DOLLARS:  Y x 1000          (hint: 1000 * the salary column)
+reg4 <- lm(salarydol ~ roe, data =ceosal1)                # regress salarydol on roe: both estimates x 1000?  (look at $coefficients)
+ceosal1$roedec <- ceosal1$roe / 100      # roe as a DECIMAL:   X x 1/100         (hint: the roe column / 100)
+reg5 <- lm(salary ~ roedec, data = ceosal1)                # regress salary on roedec: slope x 100, intercept unchanged?
+summary(reg3)$r.squared                # R^2 of reg3 -- same for all three regressions  (hint: summary(...)$r.squared)
 
 ## ---- Demo: log-level (Example 2.10) ----
 ## What you're learning: log(y) on x  ->  slope is a PERCENT change in y.
