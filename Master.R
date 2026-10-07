@@ -45,8 +45,8 @@ uhat = yi - yhat
 x <- c(5,8,3)
 y <- c(15,12,1)
 b1 <- #  
-b0 <- #   
-fitted_vals <- b1 + b0*x
+  b0 <- #   
+  fitted_vals <- b1 + b0*x
 resids <- y - fitted_vals
 SSR <- sum(resids^2) #sum of squared residuals
 
@@ -61,4 +61,10 @@ R2  <- SSE/SST
 R2 <- summary(reg2)$r.squared
 summary(reg2)
 
+mean(wage1$wage)
+sd(wage1$educ)
+reg <- lm(wage ~ educ, data = wage1)
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2]
 
+mean(wage1$wage[wage1$educ == 16])
