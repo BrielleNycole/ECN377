@@ -17,13 +17,14 @@ Cor <- Cov / (sdX*sdY)
 
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
-x <- c(2,5,2)
-y <- c(12,7,9)
+x <- c(5,8,3)
+y <- c(15,12,1)
 b1    <- cov(x,y) / var(x)   #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 c(b0 = b0, b1 = b1)
-yi <- b0 + b1 * xi #prediction
-uhat = yi - yhat
+yhat <- b0 + b1 * x #prediction
+uhat = y - yhat
+SSR <- sum((uhat)^2) #find SSR
 
 #Var(aX+b) = a^2(VarX)
 
