@@ -168,9 +168,6 @@ VarY <- EY2 - EY^2 # Var(Y | X = x)
 sdX <- sqrt(VarX)            
 sdY <- sqrt(VarY)            
 Cor <- Cov / (sdX*sdY)
-sum(pj*(yj^2))
-yv <- c(4,10,16)
-pc <- c(0.25,0.5,0.25)
 
 
 #Y = b0 + b1*X + U
