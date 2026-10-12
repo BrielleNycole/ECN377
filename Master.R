@@ -4,13 +4,13 @@ xj <- c(1,2,4,5)
 yj <- c(2,6,3,7)          
 pj <- c(0.2,0.3,0.4,0.1)  
 EX  <- sum(xj*pj)            
-EY  <- sum(yj*pj)           
+EY  <- sum(yj*pj) # E[Y | X = x]          
 EXY <- sum(xj*yj*pj)        
 Cov <- EXY - EX*EY          
 EX2 <- sum((xj^2)*pj)
 EY2 <- sum((yj^2)*pj)
 VarX <- EX2 - EX^2           
-VarY <- EY2 - EY^2           
+VarY <- EY2 - EY^2 # Var(Y | X = x)          
 sdX <- sqrt(VarX)            
 sdY <- sqrt(VarY)            
 Cor <- Cov / (sdX*sdY)
