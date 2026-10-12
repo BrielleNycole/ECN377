@@ -23,11 +23,13 @@ b1 <- reg$coefficients[2]
 
 ## ---- Demo: log-log / constant elasticity (Example 2.11) ----
 ## What you're learning: log(y) on log(x)  ->  slope is an ELASTICITY.
-lm(log(salary) ~ log(sales), data = ceosal1)$coefficients   # 4.822, 0.257
+reg <- lm(log(salary) ~ log(sales), data = ceosal1)
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2]
 
 ## ================= PROBLEMS (your turn) =========================
 ## log-level model:  log(wage)-hat = 0.58 + 0.08*educ
 b1 <- 0.08
-pct_1yr <- ______   # (a) % change in wage from +1 year of school  (hint: 100*b1)
-pct_4yr <- ______   # (b) % change from +4 years                   (hint: 100*b1*4)
-## (c) In a log-log model, the slope is called a(n) ______  (comment)
+pct_1yr <- 100*b1   # (a) % change in wage from +1 year of school  
+pct_4yr <- 100*b1*4   # (b) % change from +4 years                 
+## (c) In a log-log model, the slope is called an elasticity
