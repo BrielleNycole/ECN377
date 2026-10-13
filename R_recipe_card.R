@@ -168,10 +168,6 @@ R2  <- SSE/SST
 R2 <- summary(reg2)$r.squared
 b1*10
 
--0.7+2.3+2.3+1.8+
-  mean(sum(-0.7, 2.3, 2.3, 1.8, -5.7))
-
-
 
 mean(wage1$wage)
 sd(wage1$educ)
