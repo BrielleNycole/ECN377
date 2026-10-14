@@ -59,11 +59,17 @@ reg5$coefficients[[2]] / 100            # change in salary ($1000s) from +1% sal
 ##   log-log:      % change in y = b1 * (% change in x)
 
 
+
+
+
+
+
+
 ## ================= MY RECIPES (add your own below) =================
 
-xj <- c(1,2,4,5)
-yj <- c(2,6,3,7)          
-pj <- c(0.2,0.3,0.4,0.1)  
+xj <- c(1,4,5,7)
+yj <- c(3,6,5,2)          
+pj <- c(0.3,0.2,0.1,0.4)  
 EX  <- sum(xj*pj)            
 EY  <- sum(yj*pj) # E[Y | X = x]          
 EXY <- sum(xj*yj*pj)        
@@ -77,8 +83,14 @@ sdY <- sqrt(VarY)
 Cor <- Cov / (sdX*sdY)
 Cov/VarX #population regression slope beta1
 
+#5 
+VarX <- 9
+VarY <- 8
+Cov <- -4.3
+(3^2)*(VarX) + ((-2)^2)*(VarY) + 2*(3)*(-2)*(Cov)
+
 #Var(aX+b) = a^2(VarX)
-#Var(aX+bY) = (a^2)(VarX) - (b^2)(VarY) + 2ab(Cov(x,y))
+#Var(aX+bY) = (a^2)(VarX) + (b^2)(VarY) + 2ab(Cov(x,y))
 #sd(aX + b) = |a| sd(x)
 #E[aX + bY] = a*E[X] + b*E[Y] 
 #E[aX + b] = a*E[X] + b
@@ -90,8 +102,8 @@ Cov/VarX #population regression slope beta1
 #E[Y|X=x]= b0 + b1*x
 
 #OLS by hand
-x <- c(1,2,5,10,11,15)
-y <- c(5,8,6,10,8,14)
+x <- c(2,4,7,8,9)
+y <- c(3,4,6,9,2)
 b1    <- cov(x,y) / var(x)   #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 
@@ -100,15 +112,15 @@ reg <- lm(y ~ x)
 reg$coeffients
 b0 <- reg$coefficients[[1]]             
 b1 <- reg$coefficients[[2]]           
-yhat <- b0 + b1 * 6 # predicted y at x = 6  (fitted value)
+yhat <- b0 + b1 * 8 # predicted y at x = 6  (fitted value)
 yhat <- fitted_vals
 b1 * 4      # predicted CHANGE in y when x rises by 4
 reg$fitted.values[3]      # fitted value of observation 3
 reg$residuals[3]          # residual of observation 3 = actual - fitted
 y[3] - (b0 + b1 * x[3])   # the same residual, by hand
-uhat = y - yhat #find residual from fitted value
+uhat = 9 - yhat #find residual from fitted value
 uhat <- resids
--sum(c(1.2, -0.5, 2.1, -1.4)) # missing residual = minus the sum of the others
+-sum(c(2.7,-2.3,-2.1,-2.5)) # missing residual = minus the sum of the others
 SSR <- sum(uhat^2) #find SSR
 SSR <- sum(resids^2) 
 
@@ -124,7 +136,10 @@ SSE <- SST - SSR                        # explained
 SSE / SST                               # R^2 = 1 - SSR / SST
 summary(reg)$r.squared                  # check
 100 * summary(reg)$r.squared            # "what percentage is explained?" -> a percent
-
+SSE <- 187
+R2 <- 0.39
+SST<-SSE/R2
+SST-SSE
 #R2=SSE/SST
 #R2=1-(SSR/SST)
 #SST=SSE+SSR
@@ -154,7 +169,7 @@ data("wage1")
 reg2 <- lm(wage ~ tenure, data=wage1)
 b1 <- reg2$coefficients[2]
 b0 <- reg2$coefficients[1]
-yhat <- b0 + b1 * 16
+yhat <- b0 + b1 * 9
 fitted_vals <- b1 + b0*(wage1$wage)
 resids <- (wage1$tenure) - fitted_vals
 data("bwght")
@@ -168,7 +183,7 @@ R2  <- SSE/SST
 R2 <- summary(reg2)$r.squared
 b1*10
 
-
+(19-1)*27
 mean(wage1$wage)
 sd(wage1$educ)
 reg <- lm(wage ~ educ, data = wage1)
