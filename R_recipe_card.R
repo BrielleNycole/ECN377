@@ -104,21 +104,28 @@ Cov <- -4.3
 #OLS by hand
 x <- c(2,4,7,8,9)
 y <- c(3,4,6,9,2)
-b1    <- cov(x,y) / var(x)   #OLS slope
+b1    <- cov(x,y) / var(x)        #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
+yhat <- b0 + b1 * x               #fitted values
+uhat = y - yhat                   #residuals from fitted values
+uhat[4]                           #residual at observation 4
 
 #OLS data
-reg <- lm(y ~ x)
+library(wooldridge)
+data("wage1")
+reg <- lm(wage ~ tenure, data=wage1)
 reg$coeffients
 b0 <- reg$coefficients[[1]]             
-b1 <- reg$coefficients[[2]]           
-yhat <- b0 + b1 * 8 # predicted y at x = 6  (fitted value)
-yhat <- fitted_vals
+b1 <- reg$coefficients[[2]]  
+reg$residuals[9] #residual at observation 9
+
+yhat <- b0 + b1 * x # predicted y at x = 6  (fitted value)
+fitted_vals <- yhat
 b1 * 4      # predicted CHANGE in y when x rises by 4
-reg$fitted.values[3]      # fitted value of observation 3
-reg$residuals[3]          # residual of observation 3 = actual - fitted
+reg$fitted.values[9]      # fitted value of observation 3
+reg$residuals[9]          # residual of observation 3 = actual - fitted
 y[3] - (b0 + b1 * x[3])   # the same residual, by hand
-uhat = 9 - yhat #find residual from fitted value
+uhat = y - yhat #find residual from fitted value
 uhat <- resids
 -sum(c(2.7,-2.3,-2.1,-2.5)) # missing residual = minus the sum of the others
 SSR <- sum(uhat^2) #find SSR
