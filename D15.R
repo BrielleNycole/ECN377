@@ -5,7 +5,9 @@ data("meap93")
 
 ## ---- Demo: OVB in the wild ----
 ## What you're learning: a "wrong sign" often means a confounder, not a real effect.
-lm(math10 ~ lnchprg, data = meap93)$coefficients   # 32.14 and -0.319 (negative!)
+reg <- lm(math10 ~ lnchprg, data = meap93)  
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2]
 ## The negative slope does NOT mean free lunch lowers scores -- poverty drives both.
 
 ## ================= PROBLEMS (your turn) =========================
@@ -66,7 +68,7 @@ c(mean_b0hat = mean(b0hat), mean_b1hat = mean(b1hat))                         # 
 
 ## ---- 4. Inject an omitted variable into U and repeat ----
 ## Now U contains delta*x: something that raises y AND moves with x (think: ability and educ).
-delta <- 0.5
+delta <- -0.5
 b0bias <- numeric(reps)
 b1bias <- numeric(reps)
 for (r in 1:reps) {
@@ -80,3 +82,4 @@ points(beta0, beta1, col = "red", pch = 4, cex = 3, lwd = 3)                   #
 points(mean(b0bias), mean(b1bias), col = "darkorange3", pch = 19, cex = 2)     # new average
 c(mean_b0hat = mean(b0bias), mean_b1hat = mean(b1bias))                       # slope ~ 2.5, not 2: biased UP by delta
 ## Try delta <- -0.5 (biased DOWN) or delta <- 1 and rerun section 4.
+
