@@ -68,7 +68,7 @@ c(mean_b0hat = mean(b0hat), mean_b1hat = mean(b1hat))                         # 
 
 ## ---- 4. Inject an omitted variable into U and repeat ----
 ## Now U contains delta*x: something that raises y AND moves with x (think: ability and educ).
-delta <- -0.5
+delta <- 0.5 #positive is above and negative is below
 b0bias <- numeric(reps)
 b1bias <- numeric(reps)
 for (r in 1:reps) {
