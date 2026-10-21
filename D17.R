@@ -14,7 +14,9 @@ lm(colGPA ~ ACT, data = gpa1)$coefficients     # SLR: the ACT slope is much bigg
 
 ## ---- Demo: see the regression PLANE (Example 3.1) ----
 ## What you're learning: with two X's, OLS fits a plane instead of a line. Y-hat is the plane's height.
-## First time only, in the Console:  install.packages(c("car", "rgl"))   (Mac: rgl also needs XQuartz)
+## First time only, in the Console:  
+install.packages(c("car", "rgl"))   
+(Mac: rgl also needs XQuartz)
 library(car)
 scatter3d(colGPA ~ hsGPA + ACT, data = gpa1, fit = "linear")   # drag to rotate, scroll to zoom
 
