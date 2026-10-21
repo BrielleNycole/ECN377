@@ -108,10 +108,21 @@ SSR <- SST - SSE
 SSR
 (1-R2)*SST
 
+#Table2.3 Regression Models
+#level-level
+changeY=b1*changeX
+#level-log
+changeY=(b1/100)*perchangeX
+#log-level
+perchangeY=100*b1*changeX
+#log-log
+perchangeY=b1*perchangeX
+
+
 #log-level data set
 lm(log(salary)~roe,data=ceosal1)
 b1 <- lm(log(salary)~roe,data=ceosal1)$coefficients[2]
-100*b1*5
+100*b1*2
 #level-log regression
 reg <- lm(salary~log(sales),data=ceosal1)
 b1 <- reg$coefficients[2]
@@ -119,23 +130,23 @@ b1 <- reg$coefficients[2]
 
 #PS9
 #14 find sd(b1)
-sigma <- 2
-x <- c(2,3,4,7,9)
+sigma <- 7
+x <- c(2,3,4,8,9)
 SSTx <- sum((x-mean(x))^2)
 sdb1 <- sigma/sqrt(SSTx)
-
+sdb1
 #15 find sigma2
-n <- 56
-SSR <- 540
+n <- 48
+SSR <- 183
 sigma2 <- SSR/(n-2)
-
+sigma^2
 #16 seb1 (standard error of b1)
-n <- 12
-SSR <- 624
-SSTx <- 24
+n <- 8
+SSR <- 462
+SSTx <- 21
 sigma <- sqrt(SSR/(n-2))
 seb1 <- sigma/sqrt(SSTx)
-
+seb1
 #find standard error of the regression (sigma)
 data('wage1')
 reg <- lm(wage  ~ educ, data=wage1)
@@ -150,9 +161,10 @@ sum((wage1$educ - mean(wage1$educ))^2)
 
 #15
 #In a regression of y on x, every value x is mulitplied by 10 so the slope is divided by 10, the intercept does not change, and R2 does not change
-
+.76*1000
 #17 
 #log-level regression 
 
-
-
+100*0.059*3
+0.82*(-9)
+(33.3/100)*19
