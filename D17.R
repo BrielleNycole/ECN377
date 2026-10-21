@@ -6,11 +6,11 @@ library(wooldridge)
 ## ---- Example 3.1: college GPA on high-school GPA and ACT ----
 ## What you're learning: each slope is a ceteris-paribus effect, and Y-hat is the prediction.
 data("gpa1")
-reg1 <- ______                                      # KNOW THIS: regress colGPA on hsGPA and ACT (add variables with +)
-b <- reg1$coefficients                              # 1.29, 0.45, 0.0094
-pred1 <- ______                                     # Y-hat at hsGPA = 3.5, ACT = 24   (hint: b[[1]] + b[[2]]*3.5 + b[[3]]*24)
-chg_ACT <- ______                                   # +10 ACT points, hsGPA fixed      (hint: b[[3]] * 10)
-lm(colGPA ~ ACT, data = gpa1)$coefficients          # SLR: the ACT slope is much bigger without hsGPA
+reg1 <- lm(colGPA~hsGPA+ACT, data=gpa1)        # KNOW THIS: regress colGPA on hsGPA and ACT (add variables with +)
+b <- reg1$coefficients                         # 1.29, 0.45, 0.0094
+pred1 <- b[[1]]+b[[2]]*3.5+b[[3]]*24           # Y-hat at hsGPA = 3.5, ACT = 24   (hint: b[[1]] + b[[2]]*3.5 + b[[3]]*24)
+chg_ACT <- b[[3]]*10                           # +10 ACT points, hsGPA fixed      (hint: b[[3]] * 10)
+lm(colGPA ~ ACT, data = gpa1)$coefficients     # SLR: the ACT slope is much bigger without hsGPA
 
 ## ---- Demo: see the regression PLANE (Example 3.1) ----
 ## What you're learning: with two X's, OLS fits a plane instead of a line. Y-hat is the plane's height.
