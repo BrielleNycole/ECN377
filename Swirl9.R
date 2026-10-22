@@ -1,3 +1,4 @@
+#Swirl Lesson 9 Functions Brielle Hamel
 library(swirl)
 swirl()
 BrielleNycole
@@ -5,47 +6,28 @@ BrielleNycole
 
 Sys.Date()
 mean(c(2,4,5))
-submit()
+submit() #boring_function <- function(x) {x}
 boring_function('My first function!')
 boring_function
-submit()
+submit() #my_mean <- function(my_vector) {sum(my_vector)/length(my_vector)}
 my_mean(c(4,5,10))
-
-
-## Let me show you an example of a function I'm going to make up called
-# increment(). Most of the time I want to use this function to increase the
-# value of a number by one. This function will take two arguments: "number" and
-# "by" where "number" is the digit I want to increment and "by" is the amount I
-# want to increment "number" by. I've written the function below. 
-#
-# increment <- function(number, by = 1){
-#     number + by
-# }
-#
-# If you take a look in between the parentheses you can see that I've set
-# "by" equal to 1. This means that the "by" argument will have the default
-# value of 1.
-#
-# I can now use the increment function without providing a value for "by": 
-# increment(5) will evaluate to 6. 
-#
-# However if I want to provide a value for the "by" argument I still can! The
-# expression: increment(5, 2) will evaluate to 7. 
-# 
-# You're going to write a function called "remainder." remainder() will take
-# two arguments: "num" and "divisor" where "num" is divided by "divisor" and
-# the remainder is returned. Imagine that you usually want to know the remainder
-# when you divide by 2, so set the default value of "divisor" to 2. Please be
-# sure that "num" is the first argument and "divisor" is the second argument.
-#
-# Hint #1: You can use the modulus operator %% to find the remainder.
-#   Ex: 7 %% 4 evaluates to 3. 
-#
-# Remember to set appropriate default values! Be sure to save this 
-# script and type submit() in the console after you write the function.
-
-remainder <- function(num, divisor) {
-  # Write your code here!
-  # Remember: the last expression evaluated will be returned! 
-}
-
+submit() #remainder <- function(num, divisor=2) {num %% divisor}
+remainder(5)
+remainder(11,5)
+remainder(divisor = 11, num = 5)
+remainder(4,div=2)
+args(remainder) #shows arguments for the funtion
+submit() #evaluate <- function(func, dat) {func(dat)}
+evaluate(sd,c(1.4,3.6,7.9,8.8))
+evaluate(function(x){x+1},6)
+evaluate(function(x){x[1]},c(8,4,0))
+evaluate(function(x){x[length(x)]},c(8,4,0))
+?paste
+paste("Programming","is","fun!")
+submit() #telegram <- function(...) {paste("START",...,"STOP")}
+telegram("Will","this","work?")
+submit() #mad_libs <- function(...){args <- list(...), place <- args[["place"]], adjective <- args[["adjective"]], noun <- args[["noun"]], paste("News from", place, "today where", adjective, "students took to the streets in protest of the new", noun, "being installed on campus.")}
+mad_libs("school","funny","curtain")
+submit() #"%p%" <- function(left,right){paste(left,right,sep = " ")}
+'I'%p%'love'%p%'R!'
+2
