@@ -2,71 +2,6 @@
 
 library(wooldridge)
 
-
-## Percent change vs percentage-point change
-old <- 4.2
-new <- 5.1
-100 * (new - old) / old                 # percent change  (21.43)
-new - old                               # percentage-point change  (0.9)
-
-
-## From summary numbers instead of data
-r <- 0.6
-sx <- 2
-sy <- 5
-r * sy / sx                             # slope = cor * sd_y / sd_x  (= cov / var_x)
-
-## From summary numbers instead of data
-n <- 25
-s2y <- 16
-(n - 1) * s2y                           # SST = (n - 1) * sample variance of y
-SSE0 <- 90
-R20 <- 0.3
-SSE0 / R20 - SSE0                       # SSR, from SSE and R^2  (SST = SSE / R^2)
-
-
-## ================= 10. REAL DATA (wooldridge) =================
-data("wage1")
-nrow(wage1)                             # sample size
-mean(wage1$wage)                        # a column with $
-reg1 <- lm(wage ~ tenure, data = wage1) # y ~ x, data = the dataset
-reg1$coefficients
-reg1$residuals[2]                       # residual of the worker in row 2
-mean(wage1$wage[wage1$educ == 12])      # average wage among workers with educ = 12
-
-
-## ================= 11. UNITS OF MEASUREMENT =================
-data("ceosal1")
-reg2 <- lm(salary ~ roe, data = ceosal1)               # salary in $1000s
-reg2$coefficients                                      # before: 963.19 and 18.50
-ceosal1$salarydol <- 1000 * ceosal1$salary             # y times c:  b0 and b1 times c
-lm(salarydol ~ roe, data = ceosal1)$coefficients
-ceosal1$roedec <- ceosal1$roe / 100                    # x times c:  b1 divided by c, b0 same
-lm(salary ~ roedec, data = ceosal1)$coefficients
-## R^2 does not change when units change
-
-
-## ================= 12. LOGS (Table 2.3) =================
-reg3 <- lm(log(wage) ~ educ, data = wage1)             # log-level
-100 * reg3$coefficients[[2]]            # % change in wage from +1 year of educ
-reg4 <- lm(log(salary) ~ log(sales), data = ceosal1)   # log-log
-reg4$coefficients[[2]]                  # elasticity: % change in salary from +1% sales
-reg5 <- lm(salary ~ log(sales), data = ceosal1)        # level-log
-reg5$coefficients[[2]] / 100            # change in salary ($1000s) from +1% sales
-##   level-level:  change in y   = b1 * (change in x)
-##   log-level:    % change in y = 100 * b1 * (change in x)
-##   level-log:    change in y   = (b1 / 100) * (% change in x)
-##   log-log:      % change in y = b1 * (% change in x)
-
-
-
-
-
-
-
-
-## ================= MY RECIPES (add your own below) =================
-
 xj <- c(1,4,5,7)
 yj <- c(3,6,5,2)          
 pj <- c(0.3,0.2,0.1,0.4)  
@@ -119,6 +54,13 @@ b0 <- reg$coefficients[[1]]
 b1 <- reg$coefficients[[2]]  
 reg$residuals[9] #residual at observation 9
 
+nrow(wage1)                             # sample size
+mean(wage1$wage)                        # a column with $
+reg1 <- lm(wage ~ tenure, data = wage1) # y ~ x, data = the dataset
+reg1$coefficients
+reg1$residuals[2]                       # residual of the worker in row 2
+mean(wage1$wage[wage1$educ == 12])      # average wage among workers with educ = 12
+
 yhat <- b0 + b1 * x # predicted y at x = 6  (fitted value)
 fitted_vals <- yhat
 b1 * 4      # predicted CHANGE in y when x rises by 4
@@ -130,6 +72,7 @@ uhat <- resids
 -sum(c(2.7,-2.3,-2.1,-2.5)) # missing residual = minus the sum of the others
 SSR <- sum(uhat^2) #find SSR
 SSR <- sum(resids^2) 
+
 
 #OLS PROPERTIES 
 sum(reg$residuals) = 0                      
@@ -152,6 +95,14 @@ SST-SSE
 #SST=SSE+SSR
 #sum(uhat)=0
 #delta_yhat = b1 * delta_x
+
+n <- 25
+s2y <- 16
+(n - 1) * s2y                           # SST = (n - 1) * sample variance of y
+SSE0 <- 90
+R20 <- 0.3
+SSE0 / R20 - SSE0                       # SSR, from SSE and R^2  (SST = SSE / R^2)
+
 
 
 data("bwght")
@@ -215,7 +166,10 @@ changeY=(b1/100)*perchangeX
 perchangeY=100*b1*changeX
 #log-log
 perchangeY=b1*perchangeX
-
+##   level-level:  change in y   = b1 * (change in x)
+##   log-level:    % change in y = 100 * b1 * (change in x)
+##   level-log:    change in y   = (b1 / 100) * (% change in x)
+##   log-log:      % change in y = b1 * (% change in x)
 
 #log-level data set
 lm(log(salary)~roe,data=ceosal1)
@@ -225,6 +179,11 @@ b1 <- lm(log(salary)~roe,data=ceosal1)$coefficients[2]
 reg <- lm(salary~log(sales),data=ceosal1)
 b1 <- reg$coefficients[2]
 (b1/100)*10
+#log-log data set
+reg4 <- lm(log(salary) ~ log(sales), data = ceosal1)   
+reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
+
+
 
 #PS9
 #14 find sd(b1)
