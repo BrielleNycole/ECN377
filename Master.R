@@ -181,8 +181,8 @@ b1 <- reg$coefficients[2]
 (b1/100)*10
 #log-log data set
 reg4 <- lm(log(salary) ~ log(sales), data = ceosal1)   
-reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
-
+b1 <- reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
+b1*20
 
 
 #PS9
@@ -198,21 +198,24 @@ SSR <- 183
 sigma2 <- SSR/(n-2)
 sigma^2
 #16 seb1 (standard error of b1)
-n <- 8
-SSR <- 462
+n <- 17
+SSR <- 53
 SSTx <- 21
+SSTx <- (n-1)*(0.7^2) #(n-1)*(Sx^2)
+SSTx <- sum((c(2,3,5,6,11)-mean(c(2,3,5,6,11)))^2)
 sigma <- sqrt(SSR/(n-2))
+sigma <- 8.9
 seb1 <- sigma/sqrt(SSTx)
 seb1
-#find standard error of the regression (sigma)
+#find standard error of the regression (seb1)
 library(wooldridge)
-data('wage1')
-reg <- lm(wage  ~ educ, data=wage1)
+data('ceosal1')
+reg <- lm(salary  ~ roe, data=ceosal1)
 SSR <- sum(reg$residuals^2)
-sigma <- sqrt(SSR/(nrow(wage1)-2))
+sigma <- sqrt(SSR/(nrow(ceosal1)-2))
 summary(reg)
-sum((wage1$educ - mean(wage1$educ))^2)
-
+SSTx <- sum((ceosal1$roe - mean(ceosal1$roe))^2)
+seb1 <- sigma/sqrt(SSTx)
 #PS8
 #Q14
 #when x is mulitplied by c, b1 us mulitplied by 1/c and b0 does not change
@@ -224,6 +227,43 @@ sum((wage1$educ - mean(wage1$educ))^2)
 #17 
 #log-level regression 
 
-100*0.059*3
-0.82*(-9)
-(33.3/100)*19
+#===================Multiple Linear Regression========================
+#Find predicted value y
+8 + 1.8(x1) + 1.3(x2)
+b0 <- 2
+b1 <- 2.2
+x1 <- 6
+b2 <- -0.6
+x2 <- 4
+y <- b0 + b1*x1 + b2*x2
+#Find change in y
+changeY <- b1*x1 + b2*x2
+#Using data to find predicted y
+data('wage1')
+reg <- lm(wage ~ educ + exper + tenure, data = wage1)
+b0 <- reg$coefficients[1] #intercept
+b1 <- reg$coefficients[2] #educ
+b2 <- reg$coefficients[3] #exper
+b3 <- reg$coefficients[4] #tenure
+y <- b0 + b1*14 + b2*10 + b3*5
+#Using data to find percent change (log-level)
+data(ceosal1)
+reg <- lm(log(salary) ~ log(sales) + roe, data=ceosal1)
+b0 <- reg$coefficients[1] #intercept
+b1 <- reg$coefficients[2] #log sales
+b2 <- reg$coefficients[3] #roe
+      #find perchange when change in roe is +10
+perchange <- 100*b2*10 
+#find predicted y with log function
+exp(b0 + b1*log(5000) + b2*15)
+
+
+
+
+#compute b2*d2
+reg1 <- lm(wage ~ educ + exper, data=wage1)
+reg2 <- lm(exper ~ educ, data=wage1)
+b2 <- coefficients(reg1)['exper']
+d1 <- coefficients(reg2)['educ']
+b2*d1
+
