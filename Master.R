@@ -36,7 +36,7 @@ Cov <- -4.3
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
 
-#OLS by hand
+#==============================OLS by hand================================
 x <- c(2,4,7,8,9)
 y <- c(3,4,6,9,2)
 b1    <- cov(x,y) / var(x)        #OLS slope
@@ -45,7 +45,7 @@ yhat <- b0 + b1 * x               #fitted values
 uhat = y - yhat                   #residuals from fitted values
 uhat[4]                           #residual at observation 4
 
-#OLS data
+#===============================OLS data==============================
 library(wooldridge)
 data("wage1")
 reg <- lm(wage ~ tenure, data=wage1)
@@ -157,7 +157,7 @@ SSR <- SST - SSE
 SSR
 (1-R2)*SST
 
-#Table2.3 Regression Models
+#========================Table2.3 Regression Models=====================
 #level-level
 changeY=b1*changeX
 #level-log
