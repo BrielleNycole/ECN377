@@ -168,6 +168,7 @@ perchangeY=100*b1*changeX
 perchangeY=b1*perchangeX
 ##   level-level:  change in y   = b1 * (change in x)
 ##   log-level:    % change in y = 100 * b1 * (change in x)
+100*0.016*(-3)
 ##   level-log:    change in y   = (b1 / 100) * (% change in x)
 ##   log-log:      % change in y = b1 * (% change in x)
 
@@ -180,9 +181,11 @@ reg <- lm(salary~log(sales),data=ceosal1)
 b1 <- reg$coefficients[2]
 (b1/100)*10
 #log-log data set
-reg4 <- lm(log(salary) ~ log(sales), data = ceosal1)   
+library(wooldridge)
+data('bwght')
+reg4 <- lm(log(bwght) ~ log(faminc), data = bwght)   
 b1 <- reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
-b1*20
+b1*15
 
 
 #PS9
@@ -198,13 +201,13 @@ SSR <- 183
 sigma2 <- SSR/(n-2)
 sigma^2
 #16 seb1 (standard error of b1)
-n <- 17
+n <- 13
 SSR <- 53
 SSTx <- 21
-SSTx <- (n-1)*(0.7^2) #(n-1)*(Sx^2)
+SSTx <- (n-1)*(0.9^2) #(n-1)*(Sx^2)
 SSTx <- sum((c(2,3,5,6,11)-mean(c(2,3,5,6,11)))^2)
 sigma <- sqrt(SSR/(n-2))
-sigma <- 8.9
+sigma <- 7.9
 seb1 <- sigma/sqrt(SSTx)
 seb1
 #find standard error of the regression (seb1)
@@ -245,19 +248,18 @@ b0 <- reg$coefficients[1] #intercept
 b1 <- reg$coefficients[2] #educ
 b2 <- reg$coefficients[3] #exper
 b3 <- reg$coefficients[4] #tenure
-y <- b0 + b1*14 + b2*10 + b3*5
+y <- b0 + b1*16 + b2*5 + b3*2
+p <- b2*10
 #Using data to find percent change (log-level)
 data(ceosal1)
 reg <- lm(log(salary) ~ log(sales) + roe, data=ceosal1)
 b0 <- reg$coefficients[1] #intercept
 b1 <- reg$coefficients[2] #log sales
 b2 <- reg$coefficients[3] #roe
-      #find perchange when change in roe is +10
+#find perchange when change in roe is +10
 perchange <- 100*b2*10 
 #find predicted y with log function
 exp(b0 + b1*log(5000) + b2*15)
-
-
 
 
 #compute b2*d2
@@ -267,3 +269,6 @@ b2 <- coefficients(reg1)['exper']
 d1 <- coefficients(reg2)['educ']
 b2*d1
 
+#Suppose you could draw 1,000 different random samples from the same population and compute 
+#b1 in each one. If OLS is unbiased (SLR1–SLR4 hold), which statement is correct?
+     #The average of the 1,000 estimates is close to b1
