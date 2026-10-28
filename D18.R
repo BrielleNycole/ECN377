@@ -7,13 +7,21 @@ library(wooldridge)
 
 ## ---- Example 3.2 (wage1): log(wage) on educ, exper, tenure ----
 ## regress, then save the coefficients
-
+data(wage1)
+reg <- lm(log(wage)~educ+exper+tenure, data=wage1)
+b0 <- reg$coefficients[1]
+b1 <- reg$coefficients[2] #educ 
+b2 <- reg$coefficients[3] #exper
+b3 <- reg$coefficients[4] #tenure
 
 ## predict wage at educ = 16, exper = 4, tenure = 2 (remember exp())
+#use exp() to undo log
+predict <- exp(b0 + b1*16 + b2*4 + b3*2)
 
-
-## % change in wage: +1 year educ; +1 exper and +1 tenure
-
+## % change in wage: +1 year educ 
+100*b1
+## % change in wage: +1 exper and +1 tenure
+100*(b2+b3)
 
 ## ---- Example 3.1 (gpa1): colGPA on hsGPA and ACT ----
 ## regress; change in colGPA-hat from +10 ACT, hsGPA fixed
