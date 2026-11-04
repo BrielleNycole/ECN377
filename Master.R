@@ -242,6 +242,7 @@ y <- b0 + b1*x1 + b2*x2
 #Find change in y
 changeY <- b1*x1 + b2*x2
 #Using data to find predicted y
+library(wooldridge)
 data('wage1')
 reg <- lm(wage ~ educ + exper + tenure, data = wage1)
 b0 <- reg$coefficients[1] #intercept
@@ -250,6 +251,8 @@ b2 <- reg$coefficients[3] #exper
 b3 <- reg$coefficients[4] #tenure
 y <- b0 + b1*16 + b2*5 + b3*2
 p <- b2*10
+100*(b1*1+b3*2)
+exp(b0+b1*16+b2*5+b3*1)
 #Using data to find percent change (log-level)
 data(ceosal1)
 reg <- lm(log(salary) ~ log(sales) + roe, data=ceosal1)
@@ -269,14 +272,30 @@ b2 <- coefficients(reg1)['exper']
 d1 <- coefficients(reg2)['educ']
 b2*d1
 
-#14 
-reg <- lm(bwght ~ cigs, data=bwght)
-reg2 <- lm(bwght ~ cigs+faminc, data=bwght)
-SLRb1 <- reg$coefficients[2]
-MLRb1 <- reg2$coeffients[2]
-b2d1 <- SLRb1-MLRb1
+#Find b2*d1
+data("hprice1")
+reg <- lm(sqrft ~ bdrms, data=hprice1)
+reg2 <- lm(price ~ bdrms + sqrft, data=hprice1)
+delta1 <- reg$coefficients[2]
+beta2 <- reg2$coefficients[3]
+beta2*delta1
 
 
 #Suppose you could draw 1,000 different random samples from the same population and compute 
-#b1 in each one. If OLS is unbiased (SLR1�SLR4 hold), which statement is correct?
+#b1 in each one. If OLS is unbiased (SLR1???SLR4 hold), which statement is correct?
 #The average of the 1,000 estimates is close to b1
+
+## ---- A standard error by hand: se(educ) in wage ~ educ + exper ----
+reg <- lm(wage ~ educ + exper, data=wage1)
+xj <- wage1$educ
+n <- nrow(wage1)
+K <- 2   #educ and exper so two independent variables
+df <- n - K - 1
+SSR <- sum(reg$residuals^2)
+sigma_hat <- sqrt(SSR/df)
+SSTj <- (n-1)*var(xj)
+regj <- lm(educ ~ exper, data=wage1)
+rj2 <- summary(regj)$r.squared
+se_xj <- sigma_hat/sqrt(SSTj*(1-rj2))
+summary(reg) #std error for educ
+
