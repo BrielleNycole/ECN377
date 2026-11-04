@@ -269,6 +269,14 @@ b2 <- coefficients(reg1)['exper']
 d1 <- coefficients(reg2)['educ']
 b2*d1
 
+#14 
+reg <- lm(bwght ~ cigs, data=bwght)
+reg2 <- lm(bwght ~ cigs+faminc, data=bwght)
+SLRb1 <- reg$coefficients[2]
+MLRb1 <- reg2$coeffients[2]
+b2d1 <- SLRb1-MLRb1
+
+
 #Suppose you could draw 1,000 different random samples from the same population and compute 
-#b1 in each one. If OLS is unbiased (SLR1–SLR4 hold), which statement is correct?
-     #The average of the 1,000 estimates is close to b1
+#b1 in each one. If OLS is unbiased (SLR1ï¿½SLR4 hold), which statement is correct?
+#The average of the 1,000 estimates is close to b1
