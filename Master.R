@@ -18,7 +18,7 @@ sdY <- sqrt(VarY)
 Cor <- Cov / (sdX*sdY)
 Cov/VarX #population regression slope beta1
 
-#5 
+## ================= RULES FOR E, Var, Cov ============================
 VarX <- 9
 VarY <- 8
 Cov <- -4.3
@@ -29,10 +29,7 @@ Cov <- -4.3
 #sd(aX + b) = |a| sd(x)
 #E[aX + bY] = a*E[X] + b*E[Y] 
 #E[aX + b] = a*E[X] + b
-
 #Cov(a1*X + b1, a2*Y + b2) = a1*a2*Cov
-
-
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
 
@@ -50,8 +47,8 @@ library(wooldridge)
 data("wage1")
 reg <- lm(wage ~ tenure, data=wage1)
 reg$coeffients
-b0 <- reg$coefficients[[1]]             
-b1 <- reg$coefficients[[2]]  
+b0 <- reg$coefficients[[1]] #intercept            
+b1 <- reg$coefficients[[2]] #slope
 reg$residuals[9] #residual at observation 9
 
 nrow(wage1)                             # sample size
@@ -61,16 +58,16 @@ reg1$coefficients
 reg1$residuals[2]                       # residual of the worker in row 2
 mean(wage1$wage[wage1$educ == 12])      # average wage among workers with educ = 12
 
-yhat <- b0 + b1 * x # predicted y at x = 6  (fitted value)
+yhat <- b0 + b1 * x         # predicted y at x = 6  (fitted value)
 fitted_vals <- yhat
-b1 * 4      # predicted CHANGE in y when x rises by 4
-reg$fitted.values[9]      # fitted value of observation 3
-reg$residuals[9]          # residual of observation 3 = actual - fitted
-y[3] - (b0 + b1 * x[3])   # the same residual, by hand
-uhat = y - yhat #find residual from fitted value
+b1 * 4                      # predicted CHANGE in y when x rises by 4
+reg$fitted.values[9]        # fitted value of observation 3
+reg$residuals[9]            # residual of observation 3 = actual - fitted
+y[3] - (b0 + b1 * x[3])     # the same residual, by hand
+uhat = y - yhat             #find residual from fitted value
 uhat <- resids
 -sum(c(2.7,-2.3,-2.1,-2.5)) # missing residual = minus the sum of the others
-SSR <- sum(uhat^2) #find SSR
+SSR <- sum(uhat^2)          #find SSR
 SSR <- sum(resids^2) 
 
 
@@ -96,6 +93,7 @@ SST-SSE
 #sum(uhat)=0
 #delta_yhat = b1 * delta_x
 
+## From summary numbers instead of data
 n <- 25
 s2y <- 16
 (n - 1) * s2y                           # SST = (n - 1) * sample variance of y
@@ -130,32 +128,7 @@ b0 <- reg2$coefficients[1]
 yhat <- b0 + b1 * 9
 fitted_vals <- b1 + b0*(wage1$wage)
 resids <- (wage1$tenure) - fitted_vals
-data("bwght")
-reg2 <- lm(bwght ~ faminc, data = bwght) 
-b0 <- reg2$coefficients[1]
-b1 <- reg2$coefficients[2]
-SST <- (nrow(bwght)-1) * var(bwght$bwght)        #(n-1)*var(y)
-SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(resids)
-SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted_vals)
-R2  <- SSE/SST  
-R2 <- summary(reg2)$r.squared
-b1*10
 
-(19-1)*27
-mean(wage1$wage)
-sd(wage1$educ)
-reg <- lm(wage ~ educ, data = wage1)
-b0 <- reg$coefficients[1]
-b1 <- reg$coefficients[2]
-
-mean(wage1$wage[wage1$educ == 16])
-
-SSE <- 52
-R2 <- 0.77
-SST <- SSE/R2
-SSR <- SST - SSE
-SSR
-(1-R2)*SST
 
 #========================Table2.3 Regression Models=====================
 #level-level
@@ -281,10 +254,6 @@ beta2 <- reg2$coefficients[3]
 beta2*delta1
 
 
-#Suppose you could draw 1,000 different random samples from the same population and compute 
-#b1 in each one. If OLS is unbiased (SLR1???SLR4 hold), which statement is correct?
-#The average of the 1,000 estimates is close to b1
-
 ## ---- A standard error by hand: se(educ) in wage ~ educ + exper ----
 reg <- lm(wage ~ educ + exper, data=wage1)
 xj <- wage1$educ
@@ -299,3 +268,64 @@ rj2 <- summary(regj)$r.squared
 se_xj <- sigma_hat/sqrt(SSTj*(1-rj2))
 summary(reg) #std error for educ
 
+#=========================== Problem Set 11 =================================
+#Q1 precent change in y 
+given <- 2.5 + 0.049*x1 - 0.052*x2
+b1 <- 0.049
+b2 <- -0.052
+x1 <- 2
+x2 <- 3
+100*(b1*x1+b2*x2)
+#Q2 Data
+data(wage1)
+reg<- lm(log(wage) ~ educ + exper + tenure, data=wage1)
+b <- reg$coefficients
+#Q2 Percent change in predicted wage with exper rise by 2 and tenure rise by 1
+100*(b[3]*2 + b[4]*1) 
+#Q3 Predict wage in dollar undoing log
+exp(b[1]+b[2]*12+b[3]*10+b[4]*3) 
+
+#Q5 Data
+data(gpa1)
+reg <- lm(colGPA~ACT+hsGPA, data=gpa1)
+x1 <- mean(gpa1$ACT)
+x2 <- mean(gpa1$hsGPA)
+b <- reg$coefficients
+#Q5 compute predicted colGPA at ACT and hsGPA
+b[1]+b[2]*(x1)+b[3]*(x2) #or below
+mean(gpa1$colGPA)
+#Q6 Find sample mean y
+given <- 4.2 + 2.4*x1 - 2.5*x2
+b0 <- 4.2
+b1 <- 2.4
+b2 <- (-2.5)
+x1 <- 2.6
+x2 <- 3.6
+yhat <- b0+b1*x1+b2*x2
+#Q7 
+#Which of these regressions violate MLR3 (no perfect collinearity), so that OLS cannot estimate them? 
+#1 wage on income in dollars and income in thousands of dollars 
+#2 voteA on expendA, expendB and totexpend, where totexpend = expendA + expendB
+#3 a regression with 5 independent variables, estimated on 4 observations 
+
+
+#Q8 Data
+data(vote1)
+vote1$totexpend <- vote1$expendA + vote1$expendB
+lm(voteA ~ expendA + expendB + totexpend, data=vote1)
+
+#Q11 Find MLR slope
+btilde <- b1hat + b2hat*dtilde
+btilde <- 0.73
+b2hat <- 1.23
+dtilde <- (-0.33)
+b1hat <- btilde - b2hat*dtilde
+
+#Q12 Data
+data(bwght)
+reg <- lm(bwght ~ cigs, data=bwght)
+summary(reg)
+reg$coefficients
+#Q13
+reg2 <- lm(bwght~cigs+faminc, data=bwght)
+reg2$coefficients
