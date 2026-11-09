@@ -1,4 +1,4 @@
-## ECN 377 - R RECIPE CARD  |  question type -> the R lines that answer it
+## ECN 377 - Master
 
 library(wooldridge)
 
@@ -6,26 +6,26 @@ xj <- c(1,4,5,7)
 yj <- c(3,6,5,2)          
 pj <- c(0.3,0.2,0.1,0.4)  
 EX  <- sum(xj*pj)            
-EY  <- sum(yj*pj) # E[Y | X = x]          
+EY  <- sum(yj*pj)    # E[Y | X = x]          
 EXY <- sum(xj*yj*pj)        
 Cov <- EXY - EX*EY  
 EX2 <- sum((xj^2)*pj)
 EY2 <- sum((yj^2)*pj)
 VarX <- EX2 - EX^2           
-VarY <- EY2 - EY^2 # Var(Y | X = x)          
+VarY <- EY2 - EY^2   # Var(Y | X = x)          
 sdX <- sqrt(VarX)            
 sdY <- sqrt(VarY)            
 Cor <- Cov / (sdX*sdY)
-Cov/VarX #population regression slope beta1
+Cov/VarX             #population regression slope beta1
 
 ## ================= RULES FOR E, Var, Cov ============================
 VarX <- 9
 VarY <- 8
 Cov <- -4.3
 (3^2)*(VarX) + ((-2)^2)*(VarY) + 2*(3)*(-2)*(Cov)
+#Var(aX+bY) = (a^2)(VarX) + (b^2)(VarY) + 2ab(Cov(x,y))
 
 #Var(aX+b) = a^2(VarX)
-#Var(aX+bY) = (a^2)(VarX) + (b^2)(VarY) + 2ab(Cov(x,y))
 #sd(aX + b) = |a| sd(x)
 #E[aX + bY] = a*E[X] + b*E[Y] 
 #E[aX + b] = a*E[X] + b
@@ -33,7 +33,7 @@ Cov <- -4.3
 #Y = b0 + b1*X + U
 #E[Y|X=x]= b0 + b1*x
 
-#==============================OLS by hand================================
+# ============================== OLS by hand ================================
 x <- c(2,4,7,8,9)
 y <- c(3,4,6,9,2)
 b1    <- cov(x,y) / var(x)        #OLS slope
@@ -42,7 +42,7 @@ yhat <- b0 + b1 * x               #fitted values
 uhat = y - yhat                   #residuals from fitted values
 uhat[4]                           #residual at observation 4
 
-#===============================OLS data==============================
+# =============================== OLS data ==============================
 library(wooldridge)
 data("wage1")
 reg <- lm(wage ~ tenure, data=wage1)
@@ -71,12 +71,12 @@ SSR <- sum(uhat^2)          #find SSR
 SSR <- sum(resids^2) 
 
 
-#OLS PROPERTIES 
+# ============================= OLS PROPERTIES ================================
 sum(reg$residuals) = 0                      
 sum(x * reg$residuals) = 0                 
 b0 + b1 * mean(x) = mean(y) #(xbar, ybar) is always on the OLS line
 
-## ================= 9. SST, SSE, SSR, R^2  (uses y, reg from section 6) =================
+## ========================= SST, SSE, SSR, R^2 ========================
 SST <- sum((y - mean(y))^2)             # total variation
 SSR <- sum(reg$residuals^2)             # unexplained
 SSE <- SST - SSR                        # explained
@@ -130,7 +130,7 @@ fitted_vals <- b1 + b0*(wage1$wage)
 resids <- (wage1$tenure) - fitted_vals
 
 
-#========================Table2.3 Regression Models=====================
+# ======================== Table 2.3 Regression Models ========================
 #level-level
 changeY=b1*changeX
 #level-log
@@ -161,7 +161,7 @@ b1 <- reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
 b1*15
 
 
-#PS9
+# ========================== Problem Set 9 ================================
 #14 find sd(b1)
 sigma <- 7
 x <- c(2,3,4,8,9)
@@ -203,7 +203,7 @@ seb1 <- sigma/sqrt(SSTx)
 #17 
 #log-level regression 
 
-#===================Multiple Linear Regression========================
+# ====================== Multiple Linear Regression ========================
 #Find predicted value y
 8 + 1.8(x1) + 1.3(x2)
 b0 <- 2
@@ -254,7 +254,7 @@ beta2 <- reg2$coefficients[3]
 beta2*delta1
 
 
-## ---- A standard error by hand: se(educ) in wage ~ educ + exper ----
+# ====================== A standard error by hand ===========================
 reg <- lm(wage ~ educ + exper, data=wage1)
 xj <- wage1$educ
 n <- nrow(wage1)
@@ -276,12 +276,14 @@ b2 <- -0.052
 x1 <- 2
 x2 <- 3
 100*(b1*x1+b2*x2)
+
 #Q2 Data
 data(wage1)
 reg<- lm(log(wage) ~ educ + exper + tenure, data=wage1)
 b <- reg$coefficients
 #Q2 Percent change in predicted wage with exper rise by 2 and tenure rise by 1
 100*(b[3]*2 + b[4]*1) 
+
 #Q3 Predict wage in dollar undoing log
 exp(b[1]+b[2]*12+b[3]*10+b[4]*3) 
 
@@ -291,9 +293,11 @@ reg <- lm(colGPA~ACT+hsGPA, data=gpa1)
 x1 <- mean(gpa1$ACT)
 x2 <- mean(gpa1$hsGPA)
 b <- reg$coefficients
+
 #Q5 compute predicted colGPA at ACT and hsGPA
 b[1]+b[2]*(x1)+b[3]*(x2) #or below
 mean(gpa1$colGPA)
+
 #Q6 Find sample mean y
 given <- 4.2 + 2.4*x1 - 2.5*x2
 b0 <- 4.2
@@ -302,12 +306,6 @@ b2 <- (-2.5)
 x1 <- 2.6
 x2 <- 3.6
 yhat <- b0+b1*x1+b2*x2
-#Q7 
-#Which of these regressions violate MLR3 (no perfect collinearity), so that OLS cannot estimate them? 
-#1 wage on income in dollars and income in thousands of dollars 
-#2 voteA on expendA, expendB and totexpend, where totexpend = expendA + expendB
-#3 a regression with 5 independent variables, estimated on 4 observations 
-
 
 #Q8 Data
 data(vote1)
@@ -326,6 +324,7 @@ data(bwght)
 reg <- lm(bwght ~ cigs, data=bwght)
 summary(reg)
 reg$coefficients
+
 #Q13
 reg2 <- lm(bwght~cigs+faminc, data=bwght)
 reg2$coefficients
