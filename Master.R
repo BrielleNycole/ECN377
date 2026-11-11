@@ -2,7 +2,7 @@
 
 library(wooldridge)
 
-xj <- c(1,4,5,7)
+xj <- c(7,7,4,4)
 yj <- c(3,6,5,2)          
 pj <- c(0.3,0.2,0.1,0.4)  
 EX  <- sum(xj*pj)            
@@ -34,13 +34,13 @@ Cov <- -4.3
 #E[Y|X=x]= b0 + b1*x
 
 # ============================== OLS by hand ================================
-x <- c(2,4,7,8,9)
-y <- c(3,4,6,9,2)
+x <- c(1,5,7,9,10)
+y <- c(2,4,11,8,8)
 b1    <- cov(x,y) / var(x)        #OLS slope
 b0    <- mean(y) - b1 * mean(x)   #OLS intercept
 yhat <- b0 + b1 * x               #fitted values
 uhat = y - yhat                   #residuals from fitted values
-uhat[4]                           #residual at observation 4
+uhat[3]                           #residual at observation 4
 
 # =============================== OLS data ==============================
 library(wooldridge)
@@ -66,25 +66,39 @@ reg$residuals[9]                        # residual of observation 3 = actual - f
 y[3] - (b0 + b1 * x[3])                 # the same residual, by hand
 uhat = y - yhat                         # find residual from fitted value
 uhat <- resids
--sum(c(2.7,-2.3,-2.1,-2.5))             # missing residual = minus the sum of the others
+-sum(c(-0.7,2.3,2.3,1.8))             # missing residual = minus the sum of the others
 SSR <- sum(uhat^2)                      # find SSR
 SSR <- sum(resids^2) 
 
+#-----------------Exam 1 Data-------------------------
 library(wooldridge)
 data("ceosal1")
+n <- nrow(ceosal1) #how many in sample
 reg <- lm(salary ~ roe, data = ceosal1)
 b0 <- reg$coefficients[1]
 b1 <- reg$coefficients[2]
 mean <- mean(ceosal1$roe)
+#another example mean(wage1$wage[wage1])
 cor <- cor(ceosal1$salary,ceosal1$roe)
 data("wage1")
 reg2 <- lm(wage ~ tenure, data=wage1)
 b1 <- reg2$coefficients[2]
 b0 <- reg2$coefficients[1]
-yhat <- b0 + b1 * 9
-fitted_vals <- b1 + b0*(wage1$wage)
-resids <- (wage1$tenure) - fitted_vals
+yhat <- b0 + b1 * 13 #predicted y with tenure of 13 years
+ychange <- b1*13 #y change with tenure rising from 3 to 16
+r2_percent <- summary(reg2)$r.squared *100 #what percent of sample variation in wage is explained by tenure
+residuals(reg2)[2] #residual of worker in second row of wage1
 
+data("bwght")
+reg2 <- lm(bwght ~ faminc, data = bwght) 
+b0 <- reg2$coefficients[1]
+b1 <- reg2$coefficients[2]
+SST <- (nrow(bwght)-1) * var(bwght$bwght)        #(n-1)*var(y)
+SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(resids)
+SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted_vals)
+R2  <- SSE/SST  
+R2 <- summary(reg2)$r.squared
+summary(reg2)
 
 # ============================= OLS PROPERTIES ================================
 sum(reg$residuals) = 0                      
@@ -107,17 +121,6 @@ SST-SSE
 #SST=SSE+SSR
 #sum(uhat)=0
 #delta_yhat = b1 * delta_x
-
-data("bwght")
-reg2 <- lm(bwght ~ cigs, data = bwght) 
-b0 <- reg2$coefficients[1]
-b1 <- reg2$coefficients[2]
-SST <- (nrow(bwght)-1) * var(bwght$bwght)        #(n-1)*var(y)
-SSR <- (nrow(bwght)-1) * var(reg2$residuals)     #(n-1)*var(resids)
-SSE <- (nrow(bwght)-1) * var(reg2$fitted.values) #(n-1)*var(fitted_vals)
-R2  <- SSE/SST  
-R2 <- summary(reg2)$r.squared
-summary(reg2)
 
 ## From summary numbers instead of data
 n <- 25
@@ -157,6 +160,15 @@ reg4 <- lm(log(bwght) ~ log(faminc), data = bwght)
 b1 <- reg4$coefficients[[2]] # elasticity: % change in salary from +1% sales
 b1*15
 
+#==================== Var with SSTx =======================
+sigma <- #
+sigma <- sqrt(sum(reg$residuals^2)/(nrow(wage1)-2)) #from data
+#or summary(reg)$sigma
+  sigma2 <- SSR/(n-2)
+Varb1 <- sigma2/SSTx
+SSTx <- (n-1)*VarX
+sdb1 <- sigma/sqrt(SSTx)
+
 # ====================== Multiple Linear Regression ========================
 #Find predicted value y
 8 + 1.8(x1) + 1.3(x2)
@@ -195,17 +207,28 @@ exp(b0 + b1*log(5000) + b2*15)
 #compute b2*d2
 reg1 <- lm(wage ~ educ + exper, data=wage1)
 reg2 <- lm(exper ~ educ, data=wage1)
-b2 <- coefficients(reg1)['exper']
-d1 <- coefficients(reg2)['educ']
-b2*d1
+b2hat <- coefficients(reg1)['exper']
+d1tilde <- coefficients(reg2)['educ']
+b2hat*d1tilde
 
 #Find b2*d1
 data("hprice1")
 reg <- lm(sqrft ~ bdrms, data=hprice1)
 reg2 <- lm(price ~ bdrms + sqrft, data=hprice1)
-delta1 <- reg$coefficients[2]
-beta2 <- reg2$coefficients[3]
-beta2*delta1
+d1tilde <- reg$coefficients[2]
+b2hat <- reg2$coefficients[3]
+b2hat*d1tilde
+
+#============Omitted Variable Bias=========================
+#b1tilde = b1hat + b2hat * d1tilde
+regSLR <- lm(colGPA ~ ACT, data=gpa1)         #SLR 
+regMLR <- lm(colGPA ~ ACT + hsGPA, data=gpa1) #MLR
+b1tilde <- regSLR$coefficients[2]             #SLR ACT slope
+b1hat <- regMLR$coefficients[2]               #MLR ACT slope
+b2hat <- regMLR$coefficients[3]               #MLR hsGPA slope
+reg_delta <- lm(hsGPA ~ ACT, data=gpa1)       #omitted variable regression
+d1tilde <- reg_delta$coefficients[2]          #relationship between hsGPA and ACT
+bias <- b2hat*d1tilde                         #Bias(b1tilde)
 
 # ====================== A standard error by hand ===========================
 reg <- lm(wage ~ educ + exper, data=wage1)
@@ -327,3 +350,21 @@ reg$coefficients
 #Q13
 reg2 <- lm(bwght~cigs+faminc, data=bwght)
 reg2$coefficients
+
+#=========================Problem Set 12====================
+#Q8
+data(hprice1)
+reg <- lm(price~sqrft+bdrms+lotsize, data=hprice1)
+nrow(hprice1)
+df <- 88-3-1
+SSR <- sum(reg$residuals^2)
+sigma_hat <- sqrt(SSR/df)
+#xj is bdrms 
+xj <- hprice1$bdrms
+SSTj <- sum((xj - mean(xj))^2) #or below
+SSTj <- sum((hprice1$bdrms - mean(hprice1$bdrms))^2)
+regj <- lm(bdrms~sqrft+lotsize,data=hprice1)
+rj2 <- summary(regj)$r.squared
+se_bdrms <- sigma_hat/sqrt(SSTj*(1-rj2))
+summary(reg)$coefficients[3,2] #bdrms is b[3] and std error is column 2
+summary(reg) #residual standard error: __ (sigma) on __ degrees of freedom
