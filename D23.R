@@ -1,13 +1,10 @@
 ## ECN 377 - Day 23 STARTER  |  One-sided t-tests
-## ------------------------------------------------------------------
+
+library(wooldridge)
+
 ## t = beta-hat / se, and under H0: beta = 0 it has a t distribution with df = n - K - 1.
 ## H1: beta > 0  ->  reject H0 if t > c,  c = qt(1 - alpha, df)   (right tail)
 ## H1: beta < 0  ->  reject H0 if t < c,  c = qt(alpha, df)       (left tail, c is negative)
-## The DEMO at the end draws a one-sided test in pictures.
-## Fill each ______ and ANSWER, then upload to GitHub.
-## ------------------------------------------------------------------
-
-library(wooldridge)
 
 ## ---- Refresher: estimate, se and t value from the table ----
 ## summary(reg)$coefficients: one row per coefficient (row 1 = intercept), one column per statistic.
@@ -15,9 +12,9 @@ data("wage1")
 reg <- lm(log(wage) ~ educ + exper + tenure, data = wage1)
 s <- summary(reg)$coefficients
 s
-b_exper <- ______      # estimate for exper   (hint: s[row, column]; which row is exper?)
-se_exper <- ______     # its standard error   (hint: same row, the "Std. Error" column)
-t_hand <- ______       # t value by hand      (hint: estimate / se)
+b_exper <- s[3,1]      # estimate for exper   (hint: s[row, column]; which row is exper?)
+se_exper <- s[3,2]     # its standard error   (hint: same row, the "Std. Error" column)
+t_hand <- b_exper/se_exper       # t value by hand      (hint: estimate / se)
 t_table <- ______      # t value from s       (hint: the "t value" column)
 
 ## ---- Demo: is the return to experience positive? (Example 4.1) ----
