@@ -379,4 +379,6 @@ summary(reg)$coefficients[2,3] #second row (cigs), third column (t value)
 #Q20
 reg <- lm(log(price) ~ log(sqrft) + bdrms, data=hprice1)
 b <- reg$coefficients
-exp(b[1]+b[2]*log(2000)+b[3]*3)
+exp(b[1]+b[2]*log(2500)+b[3]*4)
+-2/0
+
