@@ -162,9 +162,9 @@ b1*15
 
 #==================== Var with SSTx =======================
 sigma <- #
-sigma <- sqrt(sum(reg$residuals^2)/(nrow(wage1)-2)) #from data
+  sigma <- sqrt(sum(reg$residuals^2)/(nrow(wage1)-2)) #from data
 #or summary(reg)$sigma
-  sigma2 <- SSR/(n-2)
+sigma2 <- SSR/(n-2)
 Varb1 <- sigma2/SSTx
 SSTx <- (n-1)*VarX
 sdb1 <- sigma/sqrt(SSTx)
@@ -368,3 +368,15 @@ rj2 <- summary(regj)$r.squared
 se_bdrms <- sigma_hat/sqrt(SSTj*(1-rj2))
 summary(reg)$coefficients[3,2] #bdrms is b[3] and std error is column 2
 summary(reg) #residual standard error: __ (sigma) on __ degrees of freedom
+
+#PS13 Q14
+install.packages('wooldridge')
+library(wooldridge)
+reg <- lm(bwght ~ cigs + faminc, data=bwght)
+summary(reg)$coefficients
+summary(reg)$coefficients[2,3] #second row (cigs), third column (t value)
+
+#Q20
+reg <- lm(log(price) ~ log(sqrft) + bdrms, data=hprice1)
+b <- reg$coefficients
+exp(b[1]+b[2]*log(2000)+b[3]*3)
