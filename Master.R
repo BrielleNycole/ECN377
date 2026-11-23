@@ -383,12 +383,26 @@ exp(b[1]+b[2]*log(2500)+b[3]*4)
 -2/0
 
 #===============================t-test======================================
-## ---- Example 4.2: do larger schools do worse? ----
+## ---- Example 4.1: is the return to experience positive?
+## H0: beta = 0 vs H1: beta > 0 for exper
+reg <- lm(log(wage) ~ educ + exper + tenure, data = wage1)
+s <- summary(reg)$coefficients
+s
+t_exper <- s[3,3]     # s[row, column]
+a <- 0.05
+c_05 <- qt(1-a, df = nrow(wage1)-3-1)   # 5% critical value (hint: df = reg$df.residual)
+c_01 <- qt(1-0.01, df= nrow(wage1)-3-1) # 1% critical value
+## Reject H0 at 5%? At 1%?                    
+## ANSWER: Reject at both because t>c
+t_exper>c_05 #true so reject
+t_exper>c_01 #true so reject
+
+##======= Example 4.2: do larger schools do worse?
 ## H0: beta = 0 vs H1: beta < 0 for enroll
 reg <- lm(math10 ~ totcomp + staff + enroll, data = meap93)
 s <- summary(reg)$coefficients
 s
-t_enroll <- s[4,3]    # [row,column]
+t_enroll <- s[4,3]    # s[row,column]
 c_left <- qt(0.05, df=nrow(meap93)-3-1)
 ## Reject H0 at 5%?                           
 t_enroll<c_left #false so do not reject
