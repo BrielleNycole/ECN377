@@ -382,3 +382,23 @@ b <- reg$coefficients
 exp(b[1]+b[2]*log(2500)+b[3]*4)
 -2/0
 
+#===============================t-test======================================
+## ---- Example 4.2: do larger schools do worse? ----
+## H0: beta = 0 vs H1: beta < 0 for enroll
+reg <- lm(math10 ~ totcomp + staff + enroll, data = meap93)
+s <- summary(reg)$coefficients
+s
+t_enroll <- s[4,3]    # [row,column]
+c_left <- qt(0.05, df=nrow(meap93)-3-1)
+## Reject H0 at 5%?                           
+t_enroll<c_left #false so do not reject
+
+##=======Example 4.3 Two Sided t-test
+reg <- lm(colGPA ~ hsGPA + ACT + skipped, data=gpa1)
+s <- summary(reg)$coefficients
+s
+t_skipped <- s[4,3]
+c_05 <- qt(1-0.05/2, df= nrow(gpa1)-3-1)
+c_01 <- qt(1-0.01/2, df=nrow(gpa1)-3-1)
+abs(t_skipped)>c_05 #true so reject
+
