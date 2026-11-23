@@ -26,8 +26,10 @@ s <- summary(reg)$coefficients
 s
 t_enroll <- (s[2,1]-1)/s[2,2] #H0: beta = a -> t = (bhat-a)/se
 c_right <- qt(1-0.05, df=nrow(campus)-1-1)     # 5% critical value
+c_two <- qt(1-0.05/2,df=nrow(campus)-1-1)
 ## Reject H0 at 5%?                           
 t_enroll>c_right #true so reject
+abs(t_enroll)>c_two #true so reject
 
 ## ---- Example 4.5 (two-sided): is the price elasticity of nox equal to -1? ----
 ## H0: beta = -1 vs H1: beta != -1 for log(nox)
