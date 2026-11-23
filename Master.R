@@ -383,6 +383,13 @@ exp(b[1]+b[2]*log(2500)+b[3]*4)
 -2/0
 
 #===============================t-test======================================
+
+## t = beta-hat / se, and under H0: beta = 0 it has a t distribution with df = n - K - 1.
+## H1: beta > 0  ->  reject H0 if t > c,  c = qt(1 - alpha, df)   (right tail)
+## H1: beta < 0  ->  reject H0 if t < c,  c = qt(alpha, df)       (left tail, c is negative)
+## H1: beta != 0 ->  reject H0 if |t|>c,  c = qt(1 - alpha/2, df)   (alpha/2 in EACH tail)
+## H0: beta = a  ->  t = (beta-hat - a) / se, then the same steps (one- or two-sided).
+
 ## ---- Example 4.1: is the return to experience positive?
 ## H0: beta = 0 vs H1: beta > 0 for exper
 reg <- lm(log(wage) ~ educ + exper + tenure, data = wage1)
