@@ -423,3 +423,13 @@ c_05 <- qt(1-0.05/2, df= nrow(gpa1)-3-1)
 c_01 <- qt(1-0.01/2, df=nrow(gpa1)-3-1)
 abs(t_skipped)>c_05 #true so reject
 
+## ---- Example 4.4 (one-sided): does crime rise more than one-for-one with enrollment? ----
+## H0: beta = 1 vs H1: beta > 1 for log(enroll)
+reg <- lm(log(crime) ~ log(enroll), data = campus)
+s <- summary(reg)$coefficients
+s
+t_enroll <- (s[2,1]-1)/s[2,2] #H0: beta = a -> t = (bhat-a)/se
+c_right <- qt(1-0.05, df=nrow(campus)-1-1)     # 5% critical value
+## Reject H0 at 5%?                           
+t_enroll>c_right #true so reject
+
